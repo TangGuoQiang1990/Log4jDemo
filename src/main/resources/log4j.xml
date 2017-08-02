@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- #log4j.xml优先于log4j.properties,like the order in xp -->
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    
+    <!-- 控制台输出 -->
+	<appender name="log.console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{HH:mm:ss,SSS} %5p (%C{1}:%M) - %m%n" />
+		</layout>
+        <!-- 细化日志级别控制 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter"> 
+				<param name="levelMin" 		value="debug" /> 
+				<param name="levelMax" 		value="error" /> 
+				<param name="AcceptOnMatch" value="true" /> 
+		</filter>
+	</appender>
+    
+    <!-- 日志文件输出 -->
+	<appender name="log.file" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" 			value="D:\\tangguoqiang4XML.log" />
+		<param name="Append" 		value="true" />
+		<param name="DatePattern" 	value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{HH:mm:ss,SSS} %5p (%C{1}:%M) - %m%n" />
+		</layout>
+		<!-- filter精确匹配，避免往后靠的大于等于，可以过滤出我需要的 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter"> 
+				<param name="levelMin" 		value="debug" /> 
+				<param name="levelMax" 		value="info" /> 
+				<param name="AcceptOnMatch" value="true" /> 
+		</filter>
+	</appender>
+	
+	<!-- additivity="false"精确匹配，停止传播，只调用最精确配置，关闭传播行为 -->
+	<!-- 日志控制器 -->
+	<logger name="com.tangguoqiang" additivity="false">
+		<level value="error" />
+		<appender-ref ref="log.console" />
+		<appender-ref ref="log.file" />
+	</logger>
+	 
+	<!-- 日志控制器 -->
+	<logger name="com.tangguoqiang.log4j_demo" additivity="false">
+		<level value="error" />
+		<appender-ref ref="log.console" />
+		<appender-ref ref="log.file" />
+	</logger>
+    
+    <!-- 通用日志控制器 -->
+	<root>
+		<level value="debug" />
+		<appender-ref ref="log.console" />
+		<appender-ref ref="log.file" />
+	</root>
+ 
+
+</log4j:configuration>
